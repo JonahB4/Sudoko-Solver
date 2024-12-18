@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Solver</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
+</head>
+<body>
+    <h1>Sudoku Solver</h1>
+    
+    <div class="grid-container">
+        <div id="sudokuGrid" class="sudoku-grid"></div>
+    </div>
+
+    <div class="controls">
+        <button id="solveBtn">Solve Puzzle</button>
+        <button class="upload-btn" onclick="document.getElementById('imageInput').click()">
+            Upload Image
+        </button>
+        <input type="file" id="imageInput" class="file-input" accept="image/*">
+        <button class="clear-btn" id="clearBtn">Clear Grid</button>
+    </div>
+
+    <img id="imagePreview" alt="Uploaded Sudoku">
+    <div id="status" class="status"></div>
+
+    <script type="module">
+        import SudokuUI from './js/SudokuUI.js';
+        document.addEventListener('DOMContentLoaded', () => {
+            window.sudokuUI = new SudokuUI();
+        });
+    </script>
+</body>
+</html>
