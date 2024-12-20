@@ -8,23 +8,37 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
 </head>
 <body>
-    <h1>Sudoku Solver</h1>
+    <div class="background">
+        <div class="gradient-overlay"></div>
+    </div>
     
-    <div class="grid-container">
-        <div id="sudokuGrid" class="sudoku-grid"></div>
-    </div>
+    <div class="container">
+        <h1>Sudoku Solver</h1>
+        
+        <div class="comparison-container">
+            <div class="original-image card">
+                <h3>Original Image</h3>
+                <img id="imagePreview" alt="Uploaded Sudoku">
+            </div>
+            
+            <div class="grid-container card">
+                <h3>Editable Grid</h3>
+                <div id="sudokuGrid" class="sudoku-grid"></div>
+                <p class="help-text">Numbers detected by OCR are highlighted in light blue. Click any cell to edit the value.</p>
+            </div>
+        </div>
 
-    <div class="controls">
-        <button id="solveBtn">Solve Puzzle</button>
-        <button class="upload-btn" onclick="document.getElementById('imageInput').click()">
-            Upload Image
-        </button>
-        <input type="file" id="imageInput" class="file-input" accept="image/*">
-        <button class="clear-btn" id="clearBtn">Clear Grid</button>
-    </div>
+        <div class="controls">
+            <button id="solveBtn" class="btn primary">Solve Puzzle</button>
+            <button class="btn success upload-btn" onclick="document.getElementById('imageInput').click()">
+                Upload Image
+            </button>
+            <input type="file" id="imageInput" class="file-input" accept="image/*">
+            <button class="btn danger clear-btn" id="clearBtn">Clear Grid</button>
+        </div>
 
-    <img id="imagePreview" alt="Uploaded Sudoku">
-    <div id="status" class="status"></div>
+        <div id="status" class="status"></div>
+    </div>
 
     <script type="module">
         import SudokuUI from './js/SudokuUI.js';
