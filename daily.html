@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Sudoku Challenge</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="background">
+        <div class="gradient-overlay"></div>
+    </div>
+    
+    <div class="container">
+        <nav class="nav-menu">
+            <a href="index.html" class="nav-link">Solver</a>
+            <a href="daily.html" class="nav-link active">Daily Challenge</a>
+        </nav>
+
+        <div class="daily-header">
+            <h1>Daily Sudoku Challenge</h1>
+            <div class="daily-info">
+                <div class="difficulty"></div>
+                <div class="timer">00:00</div>
+                <div class="date"></div>
+            </div>
+        </div>
+        
+        <div class="game-container card">
+            <div id="dailyGrid" class="sudoku-grid"></div>
+            
+            <div class="game-controls">
+                <button id="checkBtn" class="btn primary">Check Solution</button>
+                <button id="newGameBtn" class="btn success">New Game</button>
+                <button id="clearBtn" class="btn danger">Clear Grid</button>
+                <button id="revealBtn" class="btn warning">Reveal Solution</button>
+            </div>
+
+            <div class="stats">
+                <div class="best-times">
+                    <h3>Your Best Times</h3>
+                    <div id="bestTimes"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="status" class="status"></div>
+    </div>
+
+    <script type="module" src="js/DailySudoku.js"></script>
+</body>
+</html> 
