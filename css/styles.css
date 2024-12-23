@@ -488,6 +488,7 @@ h1 {
     background-color: #fff8e6 !important;
     color: #b7791f !important;
     font-weight: 600;
+    cursor: not-allowed;
 }
 
 /* Add styles for completed puzzle state */
@@ -509,6 +510,7 @@ h1 {
 .completed-message h2 {
     color: #744210;
     margin-bottom: 1rem;
+    font-size: 1.5rem;
 }
 
 .completed-message p {
@@ -534,4 +536,362 @@ h1 {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* Add these new styles for Symbol Sprint */
+
+.symbol-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1px;
+    background-color: #2d3748;
+    border: 2px solid #2d3748;
+    width: 450px;
+    height: 450px;
+    margin: 0 auto;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.symbol-cell {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.symbol-cell:hover:not(.initial) {
+    background-color: #f0f9ff;
+}
+
+.symbol-cell.selected {
+    background-color: #ebf8ff;
+    box-shadow: inset 0 0 0 2px #4299e1;
+}
+
+.symbol-cell.invalid {
+    background-color: #fff5f5;
+    color: #e53e3e;
+    animation: shake 0.3s ease-in-out;
+}
+
+.symbol-selector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+.symbols-available {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.symbols-available .options-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0.5rem;
+}
+
+.symbol-option {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.symbol-option .symbol {
+    font-size: 1.5rem;
+}
+
+.symbol-option .number {
+    font-size: 0.8rem;
+    color: #718096;
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+}
+
+.symbol-option:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.symbol-option.selected {
+    background: #4299e1;
+    color: white;
+}
+
+.symbol-option.selected .number {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.hints-remaining {
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+/* Update Grid Lines for 2x3 boxes in Symbol Sprint */
+.symbol-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1px;
+    background-color: #2d3748;
+    border: 2px solid #2d3748;
+    width: 450px;
+    height: 450px;
+    margin: 0 auto;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Remove old grid line styles */
+.symbol-cell:nth-child(6n),
+.symbol-cell:nth-child(6n+3) {
+    border-right: none;
+}
+
+/* Add new grid line styles */
+/* Vertical lines */
+.symbol-cell {
+    border-right: 1px solid #2d3748;
+    border-bottom: 1px solid #2d3748;
+}
+
+/* Thicker vertical lines every 3 columns */
+.symbol-cell:nth-child(3n) {
+    border-right: 2px solid #2d3748;
+}
+
+/* Remove last column's right border */
+.symbol-cell:nth-child(6n) {
+    border-right: none;
+}
+
+/* Thicker horizontal lines every 2 rows */
+.symbol-cell:nth-child(n+7):nth-child(-n+12),
+.symbol-cell:nth-child(n+19):nth-child(-n+24),
+.symbol-cell:nth-child(n+31):nth-child(-n+36) {
+    border-bottom: 2px solid #2d3748;
+}
+
+/* Remove bottom border for last row */
+.symbol-cell:nth-child(n+31):nth-child(-n+36) {
+    border-bottom: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .symbol-grid {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1;
+    }
+
+    .symbol-cell {
+        font-size: 1.5rem;
+    }
+
+    .symbol-option {
+        width: 30px;
+        height: 30px;
+        font-size: 1.2rem;
+    }
+}
+
+/* Add keyboard hint */
+.symbols-available::after {
+    content: "Use numbers 1-6 to place symbols";
+    display: block;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #718096;
+    margin-top: 0.5rem;
+    width: 100%;
+}
+
+/* Add styles for instructions modal */
+.instructions-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.instructions-modal .modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    max-width: 90%;
+    width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideIn 0.3s ease-out;
+}
+
+.instructions-modal h2 {
+    color: #2d3748;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.instructions-modal h3 {
+    color: #4a5568;
+    margin: 1.5rem 0 0.5rem;
+}
+
+.instructions-body {
+    margin-bottom: 1.5rem;
+}
+
+.instructions-body ul {
+    padding-left: 1.5rem;
+    margin: 0.5rem 0;
+}
+
+.instructions-body li {
+    margin: 0.3rem 0;
+    color: #4a5568;
+}
+
+.instructions-body p {
+    color: #4a5568;
+    line-height: 1.6;
+}
+
+/* Update symbol-cell for better focus visibility */
+.symbol-cell:focus {
+    outline: none;
+    box-shadow: inset 0 0 0 2px #4299e1;
+    background-color: #ebf8ff !important;
+    position: relative;
+    z-index: 1;
+}
+
+/* Add styles for theme name */
+.theme-name {
+    width: 100%;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    text-transform: capitalize;
+}
+
+/* Update symbol selector layout */
+.symbol-selector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+.symbols-available {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.symbols-available .options-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0.5rem;
+}
+
+/* Update completed state styles */
+.completed-state {
+    background: linear-gradient(45deg, #f6e05e, #faf089);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+    text-align: center;
+    animation: slideIn 0.3s ease-out;
+}
+
+.completed-state h2 {
+    color: #744210;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.completed-state .completion-time {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #975a16;
+    margin: 1rem 0;
+}
+
+.completed-state p {
+    color: #975a16;
+    margin-bottom: 0.5rem;
+}
+
+/* Add styles for incorrect cells */
+.symbol-cell.incorrect {
+    background-color: #fff5f5 !important;
+    color: #e53e3e !important;
+    animation: shake 0.5s ease-in-out;
+    border: 2px solid #e53e3e !important;
+}
+
+/* Update game controls layout */
+.game-controls {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.game-controls .btn {
+    min-width: 120px;
+}
+
+/* Update completed state for solved puzzles */
+.symbol-cell.revealed {
+    background-color: #fff8e6 !important;
+    color: #b7791f !important;
+    font-weight: 600;
+    cursor: not-allowed;
 }

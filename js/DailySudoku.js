@@ -121,12 +121,17 @@ class DailySudoku {
             return;
         }
 
+        if (this.isPuzzleRevealed()) {
+            this.showRevealedState();
+            return;
+        }
+
         try {
             const today = new Date();
             const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
             const dayOfWeek = today.getDay();
             
-            const difficulties = ['hard', 'easy', 'easy', 'medium', 'medium', 'hard', 'hard'];
+            const difficulties = ['medium', 'easy', 'easy', 'medium', 'medium', 'hard', 'hard'];
             this.difficulty = difficulties[dayOfWeek];
 
             document.querySelector('.date').textContent = today.toLocaleDateString();
@@ -544,18 +549,15 @@ class DailySudoku {
         if (confirm('Are you sure you want to see the solution? This will end your current game.')) {
             clearInterval(this.timerInterval);
             
-            this.cells.forEach((cell, index) => {
-                const row = Math.floor(index / 9);
-                const col = index % 9;
-                
-                if (!cell.classList.contains('initial-number')) {
-                    cell.value = this.solution[row][col];
-                    cell.classList.add('revealed');
-                    cell.readOnly = true;
-                }
-            });
-            
-            this.setStatus('Solution revealed. Start a new game to try again.', 'warning');
+            // Save revealed state to localStorage
+            const revealedPuzzles = JSON.parse(localStorage.getItem('revealedSudokuPuzzles') || '{}');
+            revealedPuzzles[this.getDateString()] = {
+                revealedAt: new Date().toISOString(),
+                solution: this.solution // Save the solution as well
+            };
+            localStorage.setItem('revealedSudokuPuzzles', JSON.stringify(revealedPuzzles));
+
+            this.showRevealedState();
         }
     }
 
@@ -617,6 +619,51 @@ class DailySudoku {
             const gridContainer = document.getElementById('dailyGrid').parentElement;
             gridContainer.insertBefore(message, document.querySelector('.game-controls'));
         }
+    }
+
+    // Add this method to handle revealed state
+    showRevealedState() {
+        // Get the saved solution from localStorage if needed
+        if (!this.solution) {
+            const revealedPuzzles = JSON.parse(localStorage.getItem('revealedSudokuPuzzles') || '{}');
+            const todayData = revealedPuzzles[this.getDateString()];
+            this.solution = todayData.solution;
+        }
+
+        // Show the solution in the grid
+        this.cells.forEach((cell, index) => {
+            const row = Math.floor(index / 9);
+            const col = index % 9;
+            cell.value = this.solution[row][col];
+            cell.classList.add('revealed');
+            cell.readOnly = true;
+        });
+
+        // Disable all interactions
+        document.getElementById('checkBtn').disabled = true;
+        document.getElementById('newGameBtn').disabled = true;
+        document.getElementById('clearBtn').disabled = true;
+        document.getElementById('revealBtn').disabled = true;
+
+        // Show revealed message
+        if (!document.querySelector('.completed-message')) {
+            const message = document.createElement('div');
+            message.className = 'completed-message';
+            message.innerHTML = `
+                <h2>Puzzle Revealed</h2>
+                <p>Come back tomorrow for a new challenge!</p>
+                <p>Next puzzle available at midnight</p>
+            `;
+
+            const gridContainer = document.getElementById('dailyGrid').parentElement;
+            gridContainer.appendChild(message);
+        }
+    }
+
+    // Add method to check if puzzle was revealed
+    isPuzzleRevealed() {
+        const revealedPuzzles = JSON.parse(localStorage.getItem('revealedSudokuPuzzles') || '{}');
+        return revealedPuzzles[this.getDateString()];
     }
 }
 

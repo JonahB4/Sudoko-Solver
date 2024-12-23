@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Sudoku Challenge</title>
+    <title>Symbol Sprint - Daily Puzzle</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -19,7 +19,7 @@
         </nav>
 
         <div class="daily-header">
-            <h1>Daily Sudoku Challenge</h1>
+            <h1>Symbol Sprint</h1>
             <div class="daily-info">
                 <div class="difficulty"></div>
                 <div class="timer">00:00</div>
@@ -28,13 +28,18 @@
         </div>
         
         <div class="game-container card">
-            <div id="dailyGrid" class="sudoku-grid"></div>
+            <div id="symbolGrid" class="symbol-grid"></div>
             
+            <div class="symbol-selector">
+                <div class="symbols-available"></div>
+                <div class="hints-remaining">Hints: 3</div>
+            </div>
+
             <div class="game-controls">
                 <button id="checkBtn" class="btn primary">Check Solution</button>
-                <button id="newGameBtn" class="btn success">New Game</button>
-                <button id="clearBtn" class="btn danger">Clear Grid</button>
-                <button id="revealBtn" class="btn warning">Reveal Solution</button>
+                <button id="hintBtn" class="btn success">Hint</button>
+                <button id="resetBtn" class="btn warning">Reset</button>
+                <button id="solveBtn" class="btn danger">Solve</button>
             </div>
 
             <div class="stats">
@@ -48,6 +53,6 @@
         <div id="status" class="status"></div>
     </div>
 
-    <script type="module" src="js/DailySudoku.js"></script>
+    <script type="module" src="js/SymbolSprint.js"></script>
 </body>
 </html> 
